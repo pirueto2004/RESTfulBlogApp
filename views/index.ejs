@@ -1,1 +1,11 @@
 <h1>INDEX PAGE!!</h1>
+
+<!-- loop thru all the blogs and display them nicely -->
+<% blogs.forEach(function(blog){ %>
+    <div>
+        <h2><%= blog.title %></h2>
+        <img src="<%= blog.image %>" width="300" >
+        <p><%= blog.created %></p>
+        <p><%= blog.body %></p>
+    </div>
+<% }) %>    

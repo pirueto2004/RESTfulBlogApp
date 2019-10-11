@@ -39,15 +39,23 @@ const Blog = mongoose.model("Blog", blogSchema);
 //     body: "Hello! This is a blog test"
 // });
 
-//HOME ROUTE
+//ROOT ROUTE
 app.get("/", function(req, res){
     res.redirect("/blogs");
 });
 
 //INDEX ROUTE
 app.get("/blogs", function(req, res){
-    res.render("index");
+    //retrieve all the blogs from the database
+    Blog.find({}, function(err, blogs){
+        if(err) {
+            console.log("ERROR!", err);
+        }else {
+            res.render("index", {blogs: blogs});
+        }
+    });
 });
+
 //Tell Express to listen for requests (start server)
 app.listen(PORT, IP, function(){
     console.log("The YelpCamp App Server listening on PORT " + PORT);
