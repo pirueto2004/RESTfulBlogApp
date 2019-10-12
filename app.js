@@ -56,6 +56,25 @@ app.get("/blogs", function(req, res){
     });
 });
 
+//NEW ROUTE
+app.get("/blogs/new", function(req, res){
+    res.render("new");
+});
+
+//CREATE ROUTE
+app.post("/blogs", function(req, res){
+    const data = req.body.blog;
+    //create blog
+    Blog.create(data, function(err, newBlog){
+        if(err){
+            res.render("new");
+        }else {
+            //then, redirect to the index
+            res.redirect("/blogs");
+        }
+    });
+});
+
 //Tell Express to listen for requests (start server)
 app.listen(PORT, IP, function(){
     console.log("The YelpCamp App Server listening on PORT " + PORT);
