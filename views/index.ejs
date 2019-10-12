@@ -1,3 +1,5 @@
+<% include ./partials/header %>
+
 <h1>INDEX PAGE!!</h1>
 
 <!-- loop thru all the blogs and display them nicely -->
@@ -8,4 +10,6 @@
         <p><%= blog.created %></p>
         <p><%= blog.body %></p>
     </div>
-<% }) %>    
+<% }) %>  
+
+<% include ./partials/footer %>
