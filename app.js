@@ -75,6 +75,18 @@ app.post("/blogs", function(req, res){
     });
 });
 
+//SHOW ROUTE
+app.get("/blogs/:id", function(req, res){
+    Blog.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            res.redirect("/blogs");
+        } else {
+            // res.send("SHOW PAGE!");
+            res.render("show", {blog: foundBlog});
+        }
+    });
+});
+
 //Tell Express to listen for requests (start server)
 app.listen(PORT, IP, function(){
     console.log("The YelpCamp App Server listening on PORT " + PORT);
