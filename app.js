@@ -2,6 +2,7 @@ const bodyParser = require("body-parser"),
       mongoose = require("mongoose"),
       express = require("express"),
       app = express(),
+      methodOverride = require("method-override"),
       DATABASE_NAME = 'restful_blog_app',
       mongoURI = `mongodb://localhost:27017/${DATABASE_NAME}`;
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //Setting the default extension file '.ejs' for all the files that contain the HTML
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
 const PORT = process.env.PORT || 3000;
 const IP = process.env.IP;
@@ -85,6 +87,42 @@ app.get("/blogs/:id", function(req, res){
             res.render("show", {blog: foundBlog});
         }
     });
+});
+
+//EDIT ROUTE
+app.get("/blogs/:id/edit", function(req, res){
+    Blog.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            res.redirect("/blogs");
+        } else {
+            res.render("edit", {blog: foundBlog});
+        }
+    });
+});
+
+//UPDATE ROUTE
+app.put("/blogs/:id", function(req, res){
+    // Blog.findByIdAndUpdate(id, newData, callback);
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+        if(err){
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/" + req.params.id);
+        }
+    });
+});
+
+//DELETE ROUTE
+app.delete("/blogs/:id", function(req, res){
+    //destroy blog
+    Blog.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs");
+        }
+    });
+    //redirect somewhere
 });
 
 //Tell Express to listen for requests (start server)

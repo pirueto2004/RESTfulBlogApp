@@ -7,8 +7,8 @@
     <div>
         <h2><%= blog.title %></h2>
         <img src="<%= blog.image %>" width="300" >
-        <p><%= blog.created %></p>
-        <p><%= blog.body %></p>
+        <p><%= blog.created.toDateString() %></p>
+        <p><%= blog.body.substring(0, 50) %>...</p>
         <a class="ui tiny teal button" href="/blogs/<%= blog._id %>">Read More</a>
     </div>
 <% }) %>  
