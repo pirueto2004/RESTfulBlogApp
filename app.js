@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser"),
       mongoose = require("mongoose"),
       express = require("express"),
+      expressSanitizer = require("express-sanitizer"),
       app = express(),
       methodOverride = require("method-override"),
       DATABASE_NAME = 'restful_blog_app',
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
+app.use(expressSanitizer());
 
 const PORT = process.env.PORT || 3000;
 const IP = process.env.IP;
@@ -67,6 +69,10 @@ app.get("/blogs/new", function(req, res){
 app.post("/blogs", function(req, res){
     const data = req.body.blog;
     //create blog
+    console.log(req.body);
+    
+    console.log("===================");
+    console.log(req.body);
     Blog.create(data, function(err, newBlog){
         if(err){
             res.render("new");
@@ -103,6 +109,7 @@ app.get("/blogs/:id/edit", function(req, res){
 //UPDATE ROUTE
 app.put("/blogs/:id", function(req, res){
     // Blog.findByIdAndUpdate(id, newData, callback);
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
         if(err){
             res.redirect("/blogs");
