@@ -18,12 +18,13 @@ body {
   
   #sticky {
     width:100%;
-    height:44px;
+    height:100px;
     padding-top:20px;
+    padding-bottom:20px;
     background:black;
     color:white;
     font-weight:bold;
-    font-size:24px;
+    font-size:20px;
     text-align:center;
     position:fixed;    /*Here's what sticks it*/
     bottom:0;          /*to the bottom of the window*/
