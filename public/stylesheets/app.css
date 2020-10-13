@@ -11,6 +11,7 @@ i.icon {
 }
 
 body {
+    background-color:aquamarine;
     margin:0; /*gets rid of white space around body*/
     margin-top:16px;
     position:relative; /*REQUIRED Sets up positioning for your footer*/
